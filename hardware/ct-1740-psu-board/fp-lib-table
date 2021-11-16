@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name dual_ct1740_power-supply)(type KiCad)(uri ${KIPRJMOD}/dual_ct1740_power-supply.pretty)(options "")(descr ""))
+)

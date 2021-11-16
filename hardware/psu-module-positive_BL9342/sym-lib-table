@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name TPS54331DDAR)(type Legacy)(uri ${KIPRJMOD}/TPS54331DDAR.lib)(options "")(descr ""))
+  (lib (name TPS54040DGQR)(type Legacy)(uri ${KIPRJMOD}/TPS54040DGQR.lib)(options "")(descr ""))
+)

@@ -1,0 +1,5 @@
+Application: KiCad
+Version: (5.1.7)-1, release build
+Libraries:
+    wxWidgets 3.0.5
+    libcurl/7.71.0 OpenSSL/1.1.1g (Schannel) zlib/1.2.11 brotli/1.0.7 libidn2/2.3.0 libpsl/0.21.0 (+libidn2/2.3.0) libssh2/1.9.0 nghttp2/1.41.0

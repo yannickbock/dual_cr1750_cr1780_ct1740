@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name dual_cr1750_stm32_power-supply)(type KiCad)(uri ${KIPRJMOD}/dual_cr1750_stm32_power-supply.pretty)(options "")(descr ""))
+)
