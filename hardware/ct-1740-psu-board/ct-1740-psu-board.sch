@@ -686,10 +686,8 @@ Wire Wire Line
 Connection ~ 9250 2500
 Text GLabel 7750 4000 0    50   Input ~ 0
 +28V
-Text GLabel 8950 4000 2    50   Output ~ 0
+Text GLabel 9400 4000 2    50   Output ~ 0
 +24V
-Wire Wire Line
-	8950 4000 8800 4000
 Connection ~ 8800 4000
 $Comp
 L Device:C C51
@@ -808,4 +806,33 @@ Text GLabel 1200 2350 2    50   Input ~ 0
 +5V
 Text GLabel 5300 4200 3    50   Output ~ 0
 +5V
+$Comp
+L Device:R R51
+U 1 1 61C22E65
+P 9250 4300
+F 0 "R51" H 9180 4254 50  0000 R CNN
+F 1 "3.3k" H 9180 4345 50  0000 R CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 9180 4300 50  0001 C CNN
+F 3 "~" H 9250 4300 50  0001 C CNN
+	1    9250 4300
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61C24137
+P 9250 4450
+F 0 "#PWR?" H 9250 4200 50  0001 C CNN
+F 1 "GND" H 9250 4300 50  0000 C CNN
+F 2 "" H 9250 4450 50  0001 C CNN
+F 3 "" H 9250 4450 50  0001 C CNN
+	1    9250 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8800 4000 9250 4000
+Wire Wire Line
+	9250 4150 9250 4000
+Connection ~ 9250 4000
+Wire Wire Line
+	9250 4000 9400 4000
 $EndSCHEMATC

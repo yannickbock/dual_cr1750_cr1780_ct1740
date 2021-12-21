@@ -1,4 +1,4 @@
-update=01.11.2021 18:30:00
+update=21.12.2021 19:39:26
 version=1
 last_client=kicad
 [cvpcb]
@@ -29,6 +29,7 @@ TrackWidth1=0.25
 TrackWidth2=0.5
 TrackWidth3=0.75
 TrackWidth4=1
+TrackWidth5=1.5
 ViaDiameter1=0.8
 ViaDrill1=0.4
 dPairWidth1=0.2
@@ -253,7 +254,7 @@ dPairViaGap=0.25
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=schematic
+PlotDirectoryName=
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=

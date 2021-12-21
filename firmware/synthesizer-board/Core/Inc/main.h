@@ -64,8 +64,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define SCAN_STOP_Pin GPIO_PIN_0
 #define SCAN_STOP_GPIO_Port GPIOC
-#define MUTING_Pin GPIO_PIN_1
-#define MUTING_GPIO_Port GPIOC
+#define MUTING_A_Pin GPIO_PIN_1
+#define MUTING_A_GPIO_Port GPIOC
+#define MUTING_B_Pin GPIO_PIN_3
+#define MUTING_B_GPIO_Port GPIOC
 #define FREQUENCY_CALIBRATION_Pin GPIO_PIN_0
 #define FREQUENCY_CALIBRATION_GPIO_Port GPIOA
 #define LED_S1_Pin GPIO_PIN_6

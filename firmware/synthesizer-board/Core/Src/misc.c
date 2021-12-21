@@ -20,24 +20,22 @@ bool misc_is_manual()
 
 void misc_mute(bool on)
 {
-	bool revision_a = misc_get_revision();
+	bool revision_a = !misc_get_revision();
 
-	if (on && !revision_a)
+	if (revision_a)
 	{
-		HAL_GPIO_WritePin(GPIOC, MUTING_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOC, MUTING_A_Pin, !on);
+		HAL_GPIO_WritePin(GPIOC, MUTING_B_Pin, GPIO_PIN_RESET);
 	}
-	else if (!on && !revision_a)
+	else
 	{
-		HAL_GPIO_WritePin(GPIOC, MUTING_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOC, MUTING_B_Pin, on);
+		HAL_GPIO_WritePin(GPIOC, MUTING_A_Pin, GPIO_PIN_RESET);
 	}
-	else if (on && revision_a)
-	{
-		HAL_GPIO_WritePin(GPIOC, MUTING_Pin, GPIO_PIN_SET);
-	}
-	else if (!on && revision_a)
-	{
-		HAL_GPIO_WritePin(GPIOC, MUTING_Pin, GPIO_PIN_RESET);
-	}
+
+
+
+
 }
 
 Mode misc_get_mode(int am_frequency)

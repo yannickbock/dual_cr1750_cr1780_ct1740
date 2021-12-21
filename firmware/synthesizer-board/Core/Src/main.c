@@ -118,7 +118,7 @@ int calculateFMFrequencyControlCounterPrescaler(bool fastMode)
 	double psc = 5000 - ((4 * FM_FREQUENCY_COUNTER) / 9);//4200 - 0.3675 * FM_FREQUENCY_COUNTER;
 	if (fastMode)
 	{
-		psc = psc / 1.9;
+		psc = psc / 2;
 		psc = psc < 110 ? 110 : psc;
 	}
 	else
@@ -436,7 +436,7 @@ int main(void)
 
 		  if (COLD_START)
 		  {
-			  OFF_COUNTER = 2000;
+			  OFF_COUNTER = 1000;
 			  COLD_START = false;
 		  }
 
@@ -611,7 +611,7 @@ int main(void)
 			  TIME.Minutes++;
 		  }
 
-		  HAL_Delay(100);
+		  HAL_Delay(200);
 		  HAL_RTC_SetTime(&hrtc, &TIME, RTC_FORMAT_BIN);
 	  }
 	  else if (CLOCK && SET_BUTTON && keydecoder_in(2))
@@ -629,7 +629,7 @@ int main(void)
 			  TIME.Hours++;
 		  }
 
-		  HAL_Delay(100);
+		  HAL_Delay(200);
 		  HAL_RTC_SetTime(&hrtc, &TIME, RTC_FORMAT_BIN);
 	  }
 	  else if (keydecoder_in(3))
@@ -1010,7 +1010,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 275;
+  htim7.Init.Prescaler = 500;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 250;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -1186,7 +1186,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MUTING_GPIO_Port, MUTING_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, MUTING_A_Pin|MUTING_B_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED_S1_Pin|LED_S2_Pin|DISPLAY_C_Pin|DISPLAY_B_Pin
@@ -1211,12 +1211,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(SCAN_STOP_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : MUTING_Pin */
-  GPIO_InitStruct.Pin = MUTING_Pin;
+  /*Configure GPIO pin : MUTING_A_Pin */
+  GPIO_InitStruct.Pin = MUTING_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(MUTING_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(MUTING_A_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : MUTING_B_Pin LED_S3_Pin LED_S4_Pin DISPLAY_A_Pin
+                           DISPLAY_D5_Pin DISPLAY_ON_Pin DISABLE_5V_Pin */
+  GPIO_InitStruct.Pin = MUTING_B_Pin|LED_S3_Pin|LED_S4_Pin|DISPLAY_A_Pin
+                          |DISPLAY_D5_Pin|DISPLAY_ON_Pin|DISABLE_5V_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED_S1_Pin LED_S2_Pin DISPLAY_C_Pin DISPLAY_B_Pin
                            DISPLAY_D2_Pin DISPLAY_D1_Pin DISPLAY_DP_Pin */
@@ -1226,15 +1235,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LED_S3_Pin LED_S4_Pin DISPLAY_A_Pin DISPLAY_D5_Pin
-                           DISPLAY_ON_Pin DISABLE_5V_Pin */
-  GPIO_InitStruct.Pin = LED_S3_Pin|LED_S4_Pin|DISPLAY_A_Pin|DISPLAY_D5_Pin
-                          |DISPLAY_ON_Pin|DISABLE_5V_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED_S5_Pin LED_S6_Pin LED_MAN_Pin DISPLAY_G_Pin
                            DISPLAY_F_Pin DISPLAY_E_Pin DISPLAY_D_Pin KD_OUT_4_Pin
