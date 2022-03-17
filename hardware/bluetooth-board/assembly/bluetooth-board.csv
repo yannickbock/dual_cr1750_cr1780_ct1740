@@ -1,0 +1,13 @@
+Comment,Designator,Footprint,LCSC
+"Conn_02x06_Odd_Even","J1","Socket_Strips:Socket_Strip_Straight_2x06_Pitch2.54mm",""
+"Conn_01x01","J2,J3,J4,J5","Wire_Pads:SolderWirePad_single_1mmDrill",""
+"BC847","Q1,Q2,Q3","TO_SOT_Packages_SMD:SOT-23","C2145"
+"1k","R10","Resistors_SMD:R_0805","C17513"
+"51k","R2","Resistors_SMD:R_0805","C17737"
+"33k","R4","Resistors_SMD:R_0805","C17633"
+"3.3k","R1,R3,R5,R7","Resistors_SMD:R_0805","C26010"
+"9.1k","R6","Resistors_SMD:R_0805","C17855"
+"10k","R8","Resistors_SMD:R_0805","C17414"
+"820","R9","Resistors_SMD:R_0805","C17837"
+"LTV-217","U1","Housings_SSOP:SOP-4_4.4x2.8mm_Pitch1.27mm","C691224"
+"AQY282SX","U2","Housings_SSOP:SOP-4_3.8x4.1mm_Pitch2.54mm","C250827"

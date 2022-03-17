@@ -4695,4 +4695,87 @@ Wire Wire Line
 Wire Wire Line
 	22400 13950 22250 13950
 Connection ~ 22250 13950
+Text GLabel 4950 2250 2    50   BiDi ~ 0
+RES_PA1
+Text GLabel 4950 2350 2    50   BiDi ~ 0
+RES_PA2
+Text GLabel 4950 2450 2    50   BiDi ~ 0
+RES_PA3
+Text GLabel 4950 2550 2    50   BiDi ~ 0
+RES_PA4
+Text GLabel 4950 2650 2    50   BiDi ~ 0
+RES_PA5
+Text GLabel 4950 4850 2    50   BiDi ~ 0
+RES_PB10
+Text GLabel 4950 4950 2    50   BiDi ~ 0
+RES_PB11
+$Comp
+L Connector_Generic:Conn_02x06_Odd_Even J24
+U 1 1 622574A8
+P 6950 4200
+F 0 "J24" V 7167 4196 50  0001 C CNN
+F 1 "RESERVE" H 7000 4525 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x06_Pitch2.54mm" H 6950 4200 50  0001 C CNN
+F 3 "~" H 6950 4200 50  0001 C CNN
+	1    6950 4200
+	1    0    0    -1  
+$EndComp
+Text GLabel 7250 4400 2    50   BiDi ~ 0
+RES_PA1
+Text GLabel 7250 4300 2    50   BiDi ~ 0
+RES_PA2
+Text GLabel 7250 4200 2    50   BiDi ~ 0
+RES_PA3
+Text GLabel 7250 4100 2    50   BiDi ~ 0
+RES_PA4
+Text GLabel 7250 4000 2    50   BiDi ~ 0
+RES_PA5
+Text GLabel 6750 4500 0    50   BiDi ~ 0
+RES_PB10
+Text GLabel 6750 4400 0    50   BiDi ~ 0
+RES_PB11
+$Comp
+L power:+3.3V #PWR0164
+U 1 1 622994F9
+P 6750 4000
+F 0 "#PWR0164" H 6750 3850 50  0001 C CNN
+F 1 "+3.3V" V 6750 4250 50  0000 C CNN
+F 2 "" H 6750 4000 50  0001 C CNN
+F 3 "" H 6750 4000 50  0001 C CNN
+	1    6750 4000
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0165
+U 1 1 6229AF13
+P 6750 4300
+F 0 "#PWR0165" H 6750 4050 50  0001 C CNN
+F 1 "GND" V 6750 4100 50  0000 C CNN
+F 2 "" H 6750 4300 50  0001 C CNN
+F 3 "" H 6750 4300 50  0001 C CNN
+	1    6750 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0166
+U 1 1 6229AF1D
+P 6750 4200
+F 0 "#PWR0166" H 6750 4050 50  0001 C CNN
+F 1 "+5V" V 6750 4400 50  0000 C CNN
+F 2 "" H 6750 4200 50  0001 C CNN
+F 3 "" H 6750 4200 50  0001 C CNN
+	1    6750 4200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0167
+U 1 1 6229AF27
+P 6750 4100
+F 0 "#PWR0167" H 6750 3850 50  0001 C CNN
+F 1 "GND" V 6750 3900 50  0000 C CNN
+F 2 "" H 6750 4100 50  0001 C CNN
+F 3 "" H 6750 4100 50  0001 C CNN
+	1    6750 4100
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC

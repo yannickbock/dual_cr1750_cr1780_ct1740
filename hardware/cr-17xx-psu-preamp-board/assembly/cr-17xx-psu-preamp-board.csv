@@ -1,0 +1,7 @@
+Comment,Designator,Footprint,LCSC
+"33nF","C41","Capacitors_SMD:C_0805_HandSoldering","C1739"
+"SS210","D41","Diodes_SMD:D_SMA","C14996"
+"220µH","L41","cr-17xx-psu-preamp-board:L-Sunlord-SWPA6045SxxxMT","C91047"
+"30k","R41","Resistors_SMD:R_0805_HandSoldering","C17621"
+"2.4k","R42","Resistors_SMD:R_0805_HandSoldering","C17526"
+"XL7015","U41","TO_SOT_Packages_SMD:TO-252-5_TabPin3","C73013"
