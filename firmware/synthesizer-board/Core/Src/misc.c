@@ -32,10 +32,6 @@ void misc_mute(bool on)
 		HAL_GPIO_WritePin(GPIOC, MUTING_B_Pin, on);
 		HAL_GPIO_WritePin(GPIOC, MUTING_A_Pin, GPIO_PIN_RESET);
 	}
-
-
-
-
 }
 
 Mode misc_get_mode(int am_frequency)
@@ -50,4 +46,42 @@ Mode misc_get_mode(int am_frequency)
 	}
 
 	return OTHER;
+}
+
+void misc_bt_on()
+{
+	HAL_GPIO_WritePin(GPIOB, BT_ON_OFF_Pin, GPIO_PIN_SET);
+	HAL_Delay(150);
+}
+
+void misc_bt_off()
+{
+	HAL_GPIO_WritePin(GPIOB, BT_ON_OFF_Pin, GPIO_PIN_RESET);
+	HAL_Delay(150);
+}
+
+void misc_bt_pause()
+{
+	HAL_GPIO_WritePin(GPIOA, BT_PAUSE_Pin, GPIO_PIN_SET);
+	HAL_Delay(350);
+	HAL_GPIO_WritePin(GPIOA, BT_PAUSE_Pin, GPIO_PIN_RESET);
+}
+
+void misc_bt_next()
+{
+	HAL_GPIO_WritePin(GPIOA, BT_NEXT_Pin, GPIO_PIN_SET);
+	HAL_Delay(150);
+	HAL_GPIO_WritePin(GPIOA, BT_NEXT_Pin, GPIO_PIN_RESET);
+}
+
+void misc_bt_prev()
+{
+	HAL_GPIO_WritePin(GPIOA, BT_PREV_Pin, GPIO_PIN_SET);
+	HAL_Delay(150);
+	HAL_GPIO_WritePin(GPIOA, BT_PREV_Pin, GPIO_PIN_RESET);
+}
+
+bool misc_bt_is_present()
+{
+	return !HAL_GPIO_ReadPin(GPIOB, BT_DETECTION_Pin);
 }

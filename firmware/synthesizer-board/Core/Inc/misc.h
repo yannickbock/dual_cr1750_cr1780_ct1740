@@ -10,3 +10,10 @@ bool misc_is_standby();
 bool misc_is_manual();
 void misc_mute(bool);
 Mode misc_get_mode(int);
+
+void misc_bt_toggle_power();
+void misc_bt_pause();
+void misc_bt_next();
+void misc_bt_prev();
+
+bool misc_bt_is_present();

@@ -26,3 +26,5 @@ void display_number(uint8_t, bool);
 void display(int, bool);
 
 void display_show_off();
+
+void display_show_bluetooth();

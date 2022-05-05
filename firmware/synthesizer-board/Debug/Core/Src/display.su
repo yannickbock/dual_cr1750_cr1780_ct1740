@@ -13,5 +13,6 @@ display.c:68:6:display_f	16	static
 display.c:73:6:display_g	16	static
 display.c:78:6:display_dp	16	static
 display.c:83:6:display_number	16	static
-display.c:245:6:display	32	static
-display.c:306:6:display_show_off	8	static
+display.c:272:6:display	32	static
+display.c:334:6:display_show_off	8	static
+display.c:389:6:display_show_bluetooth	8	static

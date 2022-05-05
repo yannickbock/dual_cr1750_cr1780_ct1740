@@ -75,8 +75,10 @@ bool FM_FREQUENCY_COUNTER_UPDATED = false;
 Mode MODE = OTHER;
 bool CLOCK = false;
 int STATION = -1;
+bool BLUETOOTH = false;
+bool BLUETOOTH_ON = false;
 
-bool STANDBY = false;
+bool STANDBY = true;
 bool STANDBY_DISPLAY_ON = true;
 
 bool SET_BUTTON = false;
@@ -185,6 +187,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			display_show_off();
 			OFF_COUNTER -= 1;
+		}
+		else if (!CLOCK && MODE == AM && BLUETOOTH && STATION == 0)
+		{
+			display_show_bluetooth();
 		}
 		else
 		{
@@ -408,6 +414,7 @@ int main(void)
   display_on(true);
   enable_5volt(true);
   MODE = misc_get_mode(AM_FREQUENCY_COUNTER);
+  BLUETOOTH = misc_bt_is_present();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -475,10 +482,14 @@ int main(void)
 			  FM_FREQUENCY += 5;
 			  HAL_Delay(30);
 		  }
-		  else if (MODE == AM && AM_FREQUENCY < 1602)
+		  else if (MODE == AM && AM_FREQUENCY < 1602 && !BLUETOOTH)
 		  {
 			  AM_FREQUENCY += 9;
 			  HAL_Delay(50);
+		  }
+		  else if (MODE == AM && BLUETOOTH && STATION == 0)
+		  {
+			  misc_bt_pause();
 		  }
 		  LOCK_FREQUENCY = true;
 	  }
@@ -491,10 +502,14 @@ int main(void)
 			  FM_FREQUENCY -= 5;
 			  HAL_Delay(30);
 		  }
-		  else if (MODE == AM && AM_FREQUENCY > 531)
+		  else if (MODE == AM && AM_FREQUENCY > 531 && !BLUETOOTH)
 		  {
 			  AM_FREQUENCY -= 9;
 			  HAL_Delay(50);
+		  }
+		  else if (MODE == AM && BLUETOOTH && STATION == 0)
+		  {
+			  misc_bt_pause();
 		  }
 		  LOCK_FREQUENCY = true;
 	  }
@@ -574,10 +589,14 @@ int main(void)
 			  FM_FREQUENCY += 5;
 			  HAL_Delay(200);
 		  }
-		  else if (MODE == AM && AM_FREQUENCY < 1602)
+		  else if (MODE == AM && AM_FREQUENCY < 1602 && !BLUETOOTH)
 		  {
 			  AM_FREQUENCY += 9;
 			  HAL_Delay(200);
+		  }
+		  else if (MODE == AM && BLUETOOTH && STATION == 0)
+		  {
+			  misc_bt_next();
 		  }
 	  }
 	  else if (!STANDBY && keydecoder_in(4))
@@ -588,10 +607,14 @@ int main(void)
 			  FM_FREQUENCY -= 5;
 			  HAL_Delay(200);
 		  }
-		  else if (MODE == AM && AM_FREQUENCY > 531)
+		  else if (MODE == AM && AM_FREQUENCY > 531 && !BLUETOOTH)
 		  {
 			  AM_FREQUENCY -= 9;
 			  HAL_Delay(200);
+		  }
+		  else if (MODE == AM && BLUETOOTH && STATION == 0)
+		  {
+			  misc_bt_prev();
 		  }
 	  }
 
@@ -696,6 +719,27 @@ int main(void)
 	  {
 		  setStation(0, false);
 	  }
+
+	  if (BLUETOOTH && MODE == AM && STATION == 0)
+	  {
+		  misc_mute(true);
+
+		  if (!BLUETOOTH_ON)
+		  {
+			  misc_bt_on();
+			  BLUETOOTH_ON = true;
+		  }
+	  }
+	  else if (BLUETOOTH && (MODE != AM || MODE == AM && STATION != 0))
+	  {
+		  if (BLUETOOTH_ON)
+		  {
+			  misc_bt_off();
+			  BLUETOOTH_ON = false;
+		  }
+	  }
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1189,7 +1233,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, MUTING_A_Pin|MUTING_B_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_S1_Pin|LED_S2_Pin|DISPLAY_C_Pin|DISPLAY_B_Pin
+  HAL_GPIO_WritePin(GPIOA, DISPLAY_D6_OFF_Pin|BT_PREV_Pin|BT_NEXT_Pin|BT_PAUSE_Pin
+                          |LED_S1_Pin|LED_S2_Pin|DISPLAY_C_Pin|DISPLAY_B_Pin
                           |DISPLAY_D2_Pin|DISPLAY_D1_Pin|DISPLAY_DP_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -1197,9 +1242,9 @@ static void MX_GPIO_Init(void)
                           |DISPLAY_ON_Pin|DISABLE_5V_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LED_S5_Pin|LED_S6_Pin|LED_MAN_Pin|DISPLAY_G_Pin
-                          |DISPLAY_F_Pin|DISPLAY_E_Pin|DISPLAY_D_Pin|KD_OUT_4_Pin
-                          |KD_OUT_5_Pin|CENTER_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LED_S5_Pin|LED_S6_Pin|LED_MAN_Pin|BT_ON_OFF_Pin
+                          |DISPLAY_G_Pin|DISPLAY_F_Pin|DISPLAY_E_Pin|DISPLAY_D_Pin
+                          |KD_OUT_4_Pin|KD_OUT_5_Pin|CENTER_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, DISPLAY_D4_Pin|DISPLAY_D3_Pin|KD_OUT_1_Pin|KD_OUT_2_Pin
@@ -1227,24 +1272,32 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_S1_Pin LED_S2_Pin DISPLAY_C_Pin DISPLAY_B_Pin
+  /*Configure GPIO pins : DISPLAY_D6_OFF_Pin BT_PREV_Pin BT_NEXT_Pin BT_PAUSE_Pin
+                           LED_S1_Pin LED_S2_Pin DISPLAY_C_Pin DISPLAY_B_Pin
                            DISPLAY_D2_Pin DISPLAY_D1_Pin DISPLAY_DP_Pin */
-  GPIO_InitStruct.Pin = LED_S1_Pin|LED_S2_Pin|DISPLAY_C_Pin|DISPLAY_B_Pin
+  GPIO_InitStruct.Pin = DISPLAY_D6_OFF_Pin|BT_PREV_Pin|BT_NEXT_Pin|BT_PAUSE_Pin
+                          |LED_S1_Pin|LED_S2_Pin|DISPLAY_C_Pin|DISPLAY_B_Pin
                           |DISPLAY_D2_Pin|DISPLAY_D1_Pin|DISPLAY_DP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_S5_Pin LED_S6_Pin LED_MAN_Pin DISPLAY_G_Pin
-                           DISPLAY_F_Pin DISPLAY_E_Pin DISPLAY_D_Pin KD_OUT_4_Pin
-                           KD_OUT_5_Pin CENTER_LED_Pin */
-  GPIO_InitStruct.Pin = LED_S5_Pin|LED_S6_Pin|LED_MAN_Pin|DISPLAY_G_Pin
-                          |DISPLAY_F_Pin|DISPLAY_E_Pin|DISPLAY_D_Pin|KD_OUT_4_Pin
-                          |KD_OUT_5_Pin|CENTER_LED_Pin;
+  /*Configure GPIO pins : LED_S5_Pin LED_S6_Pin LED_MAN_Pin BT_ON_OFF_Pin
+                           DISPLAY_G_Pin DISPLAY_F_Pin DISPLAY_E_Pin DISPLAY_D_Pin
+                           KD_OUT_4_Pin KD_OUT_5_Pin CENTER_LED_Pin */
+  GPIO_InitStruct.Pin = LED_S5_Pin|LED_S6_Pin|LED_MAN_Pin|BT_ON_OFF_Pin
+                          |DISPLAY_G_Pin|DISPLAY_F_Pin|DISPLAY_E_Pin|DISPLAY_D_Pin
+                          |KD_OUT_4_Pin|KD_OUT_5_Pin|CENTER_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BT_DETECTION_Pin MANUAL_Pin FM_AM_Pin */
+  GPIO_InitStruct.Pin = BT_DETECTION_Pin|MANUAL_Pin|FM_AM_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DISPLAY_D4_Pin DISPLAY_D3_Pin KD_OUT_1_Pin KD_OUT_2_Pin
@@ -1267,12 +1320,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : MANUAL_Pin FM_AM_Pin */
-  GPIO_InitStruct.Pin = MANUAL_Pin|FM_AM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : STANDBY_Pin */
   GPIO_InitStruct.Pin = STANDBY_Pin;

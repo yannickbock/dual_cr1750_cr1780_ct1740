@@ -228,6 +228,33 @@ void display_number(uint8_t number, bool dot)
 			display_f(true);
 			display_g(true);
 			break;
+		case 16: // T
+			display_a(true);
+			display_b(false);
+			display_c(false);
+			display_d(false);
+			display_e(false);
+			display_f(false);
+			display_g(false);
+			break;
+		case 17: // L
+			display_a(false);
+			display_b(false);
+			display_c(false);
+			display_d(true);
+			display_e(true);
+			display_f(true);
+			display_g(false);
+			break;
+		case 18: // U
+			display_a(false);
+			display_b(true);
+			display_c(true);
+			display_d(true);
+			display_e(true);
+			display_f(true);
+			display_g(false);
+			break;
 		default:
 			display_a(false);
 			display_b(false);
@@ -244,6 +271,7 @@ void display_number(uint8_t number, bool dot)
 
 void display(int value, bool dot)
 {
+	HAL_GPIO_WritePin(GPIOA, DISPLAY_D6_OFF_Pin, false);
 	uint8_t n = 0;
 	if (ticks == 1)
 	{
@@ -355,3 +383,61 @@ void display_show_off()
 	}
 	ticks++;
 }
+
+
+
+void display_show_bluetooth()
+{
+	HAL_GPIO_WritePin(GPIOA, DISPLAY_D6_OFF_Pin, true);
+	if (ticks == 1)
+		{
+			display_d1(false);
+			display_d2(false);
+			display_d3(false);
+			display_d4(false);
+			display_d5(false);
+		}
+		if (ticks == 2)
+		{
+			display_d1(false);
+			display_d2(true);
+			display_d3(false);
+			display_d4(false);
+			display_d5(false);
+			display_number(8, false);
+		}
+		if (ticks == 3)
+		{
+			display_d1(false);
+			display_d2(false);
+			display_d3(true);
+			display_d4(false);
+			display_d5(false);
+			display_number(17, false);
+		}
+		if (ticks == 4)
+		{
+			display_d1(false);
+			display_d2(false);
+			display_d3(false);
+			display_d4(true);
+			display_d5(false);
+			display_number(18, false);
+		}
+		if (ticks == 5)
+		{
+			display_d1(false);
+			display_d2(false);
+			display_d3(false);
+			display_d4(false);
+			display_d5(true);
+			display_number(14, false);
+		}
+
+		if (ticks == 5)
+		{
+			ticks = 0;
+		}
+		ticks++;
+}
+

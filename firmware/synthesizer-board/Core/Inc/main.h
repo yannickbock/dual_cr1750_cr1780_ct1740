@@ -70,6 +70,14 @@ void Error_Handler(void);
 #define MUTING_B_GPIO_Port GPIOC
 #define FREQUENCY_CALIBRATION_Pin GPIO_PIN_0
 #define FREQUENCY_CALIBRATION_GPIO_Port GPIOA
+#define DISPLAY_D6_OFF_Pin GPIO_PIN_2
+#define DISPLAY_D6_OFF_GPIO_Port GPIOA
+#define BT_PREV_Pin GPIO_PIN_3
+#define BT_PREV_GPIO_Port GPIOA
+#define BT_NEXT_Pin GPIO_PIN_4
+#define BT_NEXT_GPIO_Port GPIOA
+#define BT_PAUSE_Pin GPIO_PIN_5
+#define BT_PAUSE_GPIO_Port GPIOA
 #define LED_S1_Pin GPIO_PIN_6
 #define LED_S1_GPIO_Port GPIOA
 #define LED_S2_Pin GPIO_PIN_7
@@ -84,6 +92,10 @@ void Error_Handler(void);
 #define LED_S6_GPIO_Port GPIOB
 #define LED_MAN_Pin GPIO_PIN_2
 #define LED_MAN_GPIO_Port GPIOB
+#define BT_ON_OFF_Pin GPIO_PIN_10
+#define BT_ON_OFF_GPIO_Port GPIOB
+#define BT_DETECTION_Pin GPIO_PIN_11
+#define BT_DETECTION_GPIO_Port GPIOB
 #define DISPLAY_G_Pin GPIO_PIN_12
 #define DISPLAY_G_GPIO_Port GPIOB
 #define DISPLAY_F_Pin GPIO_PIN_13

@@ -2,4 +2,10 @@ misc.c:3:5:misc_get_revision	8	static
 misc.c:8:6:misc_is_standby	16	static
 misc.c:16:6:misc_is_manual	8	static
 misc.c:21:6:misc_mute	24	static
-misc.c:41:6:misc_get_mode	16	static
+misc.c:37:6:misc_get_mode	16	static
+misc.c:51:6:misc_bt_on	8	static
+misc.c:57:6:misc_bt_off	8	static
+misc.c:63:6:misc_bt_pause	8	static
+misc.c:70:6:misc_bt_next	8	static
+misc.c:77:6:misc_bt_prev	8	static
+misc.c:84:6:misc_bt_is_present	8	static
